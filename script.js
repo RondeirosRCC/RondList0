@@ -1,4 +1,5 @@
-(() => {
+
+    (() => {
 "use strict";
 
 const THEME_STORAGE_KEY = "RONDLIST_THEME";
@@ -1072,7 +1073,7 @@ display.className = "date-control__value";
 display.textContent = formatted || "—";
 
 const calendar = document.createElement("span");
-calendar.className = "date-control__calendar";
+calendar.className = "date-control__calendar ti ti-calendar";
 calendar.setAttribute("aria-hidden", "true");
 
 const input = document.createElement("input");
@@ -2077,7 +2078,7 @@ text.textContent = label;
 const removeButton = document.createElement("button");
 removeButton.className = "additional-access-chip__remove";
 removeButton.type = "button";
-removeButton.textContent = "×";
+removeButton.innerHTML = '<i class="ti ti-x" aria-hidden="true"></i>';
 removeButton.setAttribute("aria-label", `Remover ${label}`);
 removeButton.title = `Remover ${label}`;
 removeButton.addEventListener("click", () =>
@@ -2388,7 +2389,7 @@ publishing &&
 }
 
 async function publishRequirementStamp(topicId, bbcode) {
-return replyForumTopic(topicId, bbcode);
+return replyForumTopic(topicId, bbcode, { disableHtml: true });
 }
 
 function requirementTagInputs() {
@@ -2656,13 +2657,11 @@ throw new Error(error.trim());
 return response.url;
 }
 
-async function replyForumTopic(topicId, bbcode) {
+async function replyForumTopic(topicId, bbcode, options = {}) {
 const replyUrl = new URL("/post", CONFIG.forum.origin);
 replyUrl.searchParams.set("t", topicId);
 replyUrl.searchParams.set("mode", "reply");
-return submitForumPostingForm(replyUrl, bbcode, {
-disableHtml: true
-});
+return submitForumPostingForm(replyUrl, bbcode, options);
 }
 
 async function editForumTopic(topicId, bbcode) {
@@ -4021,37 +4020,25 @@ const styles = {
 success: {
 title: "Sucesso",
 icon: `
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="8.5"></circle>
-<path class="toast__icon-shape" d="m8 12.2 2.6 2.6L16.5 9"></path>
-</svg>
+<i class="ti ti-circle-check" aria-hidden="true"></i>
 `
 },
 error: {
 title: "Erro",
 icon: `
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="8.5"></circle>
-<path class="toast__icon-shape" d="m9 9 6 6M15 9l-6 6"></path>
-</svg>
+<i class="ti ti-circle-x" aria-hidden="true"></i>
 `
 },
 warning: {
 title: "Atenção",
 icon: `
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="M10.3 4.6 3.4 17a2 2 0 0 0 1.8 3h13.6a2 2 0 0 0 1.8-3L13.7 4.6a2 2 0 0 0-3.4 0Z"></path>
-<path class="toast__icon-shape" d="M12 9v4.2M12 16.5h.01"></path>
-</svg>
+<i class="ti ti-alert-triangle" aria-hidden="true"></i>
 `
 },
 info: {
 title: "Informação",
 icon: `
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="8.5"></circle>
-<path class="toast__icon-shape" d="M12 10.5v5M12 7.5h.01"></path>
-</svg>
+<i class="ti ti-info-circle" aria-hidden="true"></i>
 `
 }
 };
